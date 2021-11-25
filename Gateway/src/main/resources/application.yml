@@ -1,0 +1,21 @@
+server:
+  port: 81
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: gateway
+          uri: lb://nacos-producer/
+#          uri: http://127.0.0.1:8002/
+          filters:
+            - StripPrefix=1
+          predicates:
+            - Path=/producer/**
+      discovery:
+        locator:
+          enabled: true
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
